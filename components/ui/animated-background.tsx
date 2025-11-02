@@ -8,12 +8,22 @@ import {
   useEffect,
   useState,
   useId,
+  PropsWithChildren,
+  HTMLAttributes,
 } from "react";
 
+// FIX: Removed 'className' from this explicit type definition, as it is already
+// inherited from HTMLAttributes<HTMLElement>, resolving the conflict during cloneElement.
+type ChildProps = PropsWithChildren<
+  HTMLAttributes<HTMLElement> & {
+    "data-id": string;
+    // className?: string; // REMOVED: This was causing a type conflict when merging props
+  }
+>;
+
 export type AnimatedBackgroundProps = {
-  children:
-    | ReactElement<{ "data-id": string }>[]
-    | ReactElement<{ "data-id": string }>;
+  // Using the updated ChildProps type
+  children: ReactElement<ChildProps>[] | ReactElement<ChildProps>;
   defaultValue?: string;
   onValueChange?: (newActiveId: string | null) => void;
   className?: string;
@@ -46,8 +56,11 @@ export function AnimatedBackground({
     }
   }, [defaultValue]);
 
-  return Children.map(children, (child: any, index) => {
+  return Children.map(children, (child: ReactElement<ChildProps>, index) => {
     const id = child.props["data-id"];
+
+    // Explicitly grab the original className to ensure the cn() call works
+    const originalClassName = child.props.className as string | undefined;
 
     const interactionProps = enableHover
       ? {
@@ -62,7 +75,8 @@ export function AnimatedBackground({
       child,
       {
         key: index,
-        className: cn("relative inline-flex", child.props.className),
+        // The merged className uses the new local variable
+        className: cn("relative inline-flex", originalClassName),
         "data-checked": activeId === id ? "true" : "false",
         ...interactionProps,
       },
