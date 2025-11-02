@@ -45,6 +45,13 @@ export const PROJECTS: Project[] = [
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
+    company: 'Internship',
+    title: 'Inamigos Design',
+    start: 'Sep 2025',
+    end: 'Nov 2025',
+    id: 'work3',
+  },
+  {
     company: 'Freelancing',
     title: 'Graphic Designer',
     start: '2025',
@@ -59,6 +66,7 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     end: '2025',
     id: 'work3',
   },
+  
 ]
 
 
@@ -69,17 +77,19 @@ export const SOCIAL_LINKS: SocialLink[] = [
     link: 'https://github.com/sid-warrior',
   },
   {
-    label: 'Twitter',
-    link: 'https://x.com/Siddanttt',
+    label: 'Resume',
+    link: 'https://drive.google.com/file/d/1yrKwFQ9H5jon8XMF8va01QfERkRz_VQN/view?usp=drive_link',
   },
-  {
-    label: 'Youtube',
-    link: '/',
-  },
-  {
+   {
     label: 'Instagram',
     link: 'https://www.instagram.com/5iddddddd?igsh=MWZob2N2c2V2OW14ag==',
   },
+  {
+    label: 'X',
+    link: 'https://x.com/Siddanttt',
+  },
+  
+ 
 ]
 
 export const EMAIL = 'saltburn696@gmail.com'

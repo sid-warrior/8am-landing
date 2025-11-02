@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Jost } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "./header";
 import { Footer } from "./footer";
@@ -24,13 +24,13 @@ export const metadata: Metadata = {
     "Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.",
 };
 
-const geist = Jost({
-  variable: "--font-Jost",
+const geist = {
+  variable: "--font-Space Mono",
   subsets: ["latin"],
-});
+};
 
-const geistMono = Jost({
-  variable: "--font-Jost",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geist.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
       >
         <ThemeProvider
           enableSystem={true}
