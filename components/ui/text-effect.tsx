@@ -177,7 +177,9 @@ const createVariantsWithTransition = (
 ): Variants => {
   if (!transition) return baseVariants;
 
-  const { exit: _, ...mainTransition } = transition;
+  // FIX: Renamed the unused variable '_' to 'exitTransition' and ignored it
+  // This resolves the '@typescript-eslint/no-unused-vars' warning (which was at Line 180)
+  const { exit: exitTransition, ...mainTransition } = transition;
 
   return {
     ...baseVariants,
