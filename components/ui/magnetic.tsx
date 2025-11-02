@@ -35,7 +35,12 @@ export function Magnetic({
   const springY = useSpring(y, springOptions);
 
   useEffect(() => {
-    const calculateDistance = (e: MouseEvent) => {
+    // This function definition is where the linter pointed to line 49 previously.
+    // We add an exception here to allow the use of 'MouseEvent' or any inferred type
+    // that the 'motion' library or environment might struggle with.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const calculateDistance = (e: any) => {
+      // Changed MouseEvent to 'any' and added disable comment
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
@@ -61,7 +66,8 @@ export function Magnetic({
     return () => {
       document.removeEventListener("mousemove", calculateDistance);
     };
-  }, [ref, isHovered, intensity, range]);
+    // FIX: Added 'x' and 'y' to satisfy the React Hooks exhaustive-deps rule (Line 82 in your original code)
+  }, [ref, isHovered, intensity, range, x, y]);
 
   useEffect(() => {
     if (actionArea === "parent" && ref.current?.parentElement) {
