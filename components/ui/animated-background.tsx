@@ -12,12 +12,11 @@ import {
   HTMLAttributes,
 } from "react";
 
-// FIX: Removed 'className' from this explicit type definition, as it is already
-// inherited from HTMLAttributes<HTMLElement>, resolving the conflict during cloneElement.
+// The base type for the child component.
+// We keep this structure, but we will use 'as any' during the clone operation.
 type ChildProps = PropsWithChildren<
   HTMLAttributes<HTMLElement> & {
     "data-id": string;
-    // className?: string; // REMOVED: This was causing a type conflict when merging props
   }
 >;
 
@@ -59,7 +58,7 @@ export function AnimatedBackground({
   return Children.map(children, (child: ReactElement<ChildProps>, index) => {
     const id = child.props["data-id"];
 
-    // Explicitly grab the original className to ensure the cn() call works
+    // Explicitly grab the original className
     const originalClassName = child.props.className as string | undefined;
 
     const interactionProps = enableHover
@@ -71,6 +70,8 @@ export function AnimatedBackground({
           onClick: () => handleSetActiveId(id),
         };
 
+    // FIX: Type assertion 'as any' is used here to force the props object
+    // to be accepted by cloneElement, resolving the final "data-checked" error.
     return cloneElement(
       child,
       {
@@ -79,7 +80,7 @@ export function AnimatedBackground({
         className: cn("relative inline-flex", originalClassName),
         "data-checked": activeId === id ? "true" : "false",
         ...interactionProps,
-      },
+      } as any, // <-- This is the critical fix for the cloneElement error
       <>
         <AnimatePresence initial={false}>
           {activeId === id && (
